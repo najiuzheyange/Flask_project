@@ -1,0 +1,89 @@
+{% extends 'base.html'%}
+
+{% block title %}
+    个人中心
+{% endblock %}
+
+{% block label %}
+
+{% endblock %}
+
+
+{% block content %}
+          <!-- Content Row -->
+          <div class="row">
+            <div class="col-lg-12 mb-2">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">个人详情</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <td rowspan="3">
+                                <img src="/static/img/3.gif" alt="">
+                            </td>
+                            <th>姓名</th>
+                            <td>zyb</td>
+                            <th>性别</th>
+                            <td>男</td>
+                        </tr>
+                        <tr>
+                            <th>年龄</th>
+                            <td>19</td>
+                            <th>联系方式</th>
+                            <td>13123245461</td>
+                        </tr>
+                        <tr>
+                            <th>邮箱</th>
+                            <td>zybdm666@163.com</td>
+                            <th>身份</th>
+                            <td>学生</td>
+                        </tr>
+                        <tr>
+                            <th>家庭住址</th>
+                            <td colspan="2">北京市庞各庄</td>
+                            <th>学习阶段</th>
+                            <td>python第二阶段</td>
+                        </tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!--课程表-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">课程表</h6>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="7" align="center" style="color: deepskyblue;font-size: 50px" >{{ now.year }}年{{ now.month }}月份python课表</td>
+                            </tr>
+                            <tr align="center">
+                                <th>周一</th>
+                                <th>周二</th>
+                                <th>周三</th>
+                                <th>周四</th>
+                                <th>周五</th>
+                                <th>周六</th>
+                                <th>周日</th>
+                            </tr>
+                            {% for i in calendar%}
+                            <tr align="center" style="font-size: 20px">
+                                {% for d in i %}
+                                <td>
+                                    {{ d }}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

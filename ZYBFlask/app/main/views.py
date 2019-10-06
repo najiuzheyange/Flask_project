@@ -1,5 +1,6 @@
 import hashlib
 import functools
+import datetime
 
 from flask import request
 from flask import redirect
@@ -179,3 +180,63 @@ def leave_list(page):
     pager = Pager(leaves, 2)  # 实例化一个分页器leaves为总数据，3为每页的数据条数
     page_data = pager.page_data(page)  # 对应页码所显示的数据
     return render_template("leave_list.html", **locals())
+
+class Calendar():
+    def __init__(self,month="now"):
+        self.result=[]
+        big_month=[1,3,5,7,8,10,12]
+        small_month=[4,6,9,11]
+        now = datetime.datetime.now()
+        #获取指定月份1号日期
+        if month == "now":
+            month = now.month
+            first_date = datetime.datetime(now.year,now.month,1,0,0)
+        else:
+            first_date=datetime.datetime(now.year,month,1,0,0)
+        #获取指定月份的总天数
+        if month in big_month:
+            day_range=range(1,32)
+        elif month in small_month:
+            day_range=range(1,31)
+        else:
+            day_range=range(1,29)
+        self.day_range=list(day_range)
+        first_week=first_date.weekday()  #获取指定月份1号是周几
+        #第一行数据
+        line1=[]
+        for i in range(first_week):
+            line1.append(" ")
+        for j in range(7-first_week):
+            if j!=4 and j!=5:
+                line1.append(str(self.day_range.pop(0))+"-django开发")
+            else:
+                line1.append(str(self.day_range.pop(0)))
+        self.result.append(line1)
+        #获取其他日期的数据
+        while self.day_range:
+            line=[]
+            for b in range(7):
+                if len(line)<7 and self.day_range and b!=5 and b!=6 :
+                    line.append(str(self.day_range.pop(0))+"-django开发")
+                elif len(line)<7 and self.day_range:
+                    line.append(str(self.day_range.pop(0)))
+                else:
+                    line.append(" ")
+            self.result.append(line)
+    def return_month(self):
+        return self.result
+    def print_month(self):
+        print("星期一 星期二 星期三 星期四 星期五 星期六 星期日")
+        for line in self.result:
+            for e in line:
+                e=e.center(6)
+                print(e,end=" ")
+            print()
+
+
+@main.route("/userinfo/")
+@loginValid
+def userinfo():
+    calendar=Calendar().return_month()
+    now=datetime.datetime.now()
+    return render_template("userinfo.html",**locals())
