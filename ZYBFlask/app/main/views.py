@@ -7,8 +7,8 @@ from flask import redirect
 from flask import session
 from flask import jsonify
 from flask import render_template
-from . import main
-from app import api
+from . import main,api
+# from app import api
 from app.models import *
 from flask_restful import Resource
 
